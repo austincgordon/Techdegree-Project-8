@@ -2,18 +2,61 @@
 
 * {
 	box-sizing: border-box;
+	font-family: 'Nunito', sans-serif;
 }
 
 /* Page Styles */
 
 body {
 	position: relative;
+	background-color: rgb(238, 238, 238);
+}
+
+header {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr;
 }
 
 .grid-container {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-template-rows: 1fr 1fr 1fr 1fr;
+	grid-row-gap: 20px;
+	grid-column-gap: 20px;
+}
+
+.search {
+	justify-self: end;
+	align-self: center;
+	width: 20vw;
+}
+
+.search-bar {
+	width: 100%;
+}
+
+.card {
+	display: grid;
+	grid-template-columns: 0.5fr 1fr;
+	grid-template-rows: 1fr;
+	background-color: #fff;
+	cursor: pointer;
+	border-radius: 5px;
+	border: 2px rgb(204, 204, 204) solid;
+}
+
+.avatar {
+	border-radius: 50%;
+	width: 90px;
+	height: 90px;
+	align-self: center;
+	justify-self: center;
+}
+
+.text-container {
+	justify-items: center;
+	align-items: center;
 }
 
 /* Overlay Styles */
@@ -41,7 +84,23 @@ body {
 .modal-close {
 	position: absolute;
 	right: 15px;
-	top: 5px;
+	top: 10px;
+	cursor: pointer;
+}
+
+#leftArrow {
+	position: absolute;
+	font-size: 24px;
+	left: 12px;
+	top: 200px;
+	cursor: pointer;
+}
+
+#rightArrow {
+	position: absolute;
+	font-size: 24px;
+	right: 12px;
+	top: 200px;
 	cursor: pointer;
 }
 

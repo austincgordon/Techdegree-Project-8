@@ -5,7 +5,9 @@ const urlAPI = `https://randomuser.me/api/?results=12&inc=name,picture,email,loc
 const gridContainer = document.querySelector('.grid-container');
 const overlay = document.querySelector('.overlay');
 const modalContainer = document.querySelector('.modal');
-const modalClose = document.querySelector('.modal-close');
+const searchBar = document.getElementById('searchBar');
+const leftArrow = document.createElement('button');
+const rightArrow = document.createElement('button');
 
 // Pulls Employee Data
 
@@ -58,31 +60,75 @@ function displayModal(index) {
 	let date = new Date(dob.date);
 
 	const modalHTML = `
+		<button class="modal-close">X</button>
     <img class="avatar" src="${picture.large}" />
     <div class="modal-text">
       <h2 class="name">${name.first} ${name.last}</h2>
       <p class="email">${email}</p>
-      <p class="address">${city}</p>
+			<p class="address">${city}</p>
       <hr />
       <p>${phone}</p>
-      <p class="address">${street}, ${state} ${postcode}</p>
+      <p class="address">${street.number} ${
+		street.name
+	}, ${state} ${postcode}</p>
       <p>Birthday: ${date.getMonth()}/${date.getDate()}/${date.getFullYear()}</p>
     </div>
 	`;
 
 	overlay.classList.remove('hidden');
 	modalContainer.innerHTML = modalHTML;
+
+	leftArrow.id = 'leftArrow';
+	modalContainer.appendChild(leftArrow);
+	document.getElementById('leftArrow').innerHTML = `<`;
+
+	rightArrow.id = 'rightArrow';
+	modalContainer.appendChild(rightArrow);
+	document.getElementById('rightArrow').innerHTML = `>`;
+
+	const modalClose = document.querySelector('.modal-close');
+	modalClose.addEventListener('click', () => {
+		overlay.classList.add('hidden');
+	});
 }
 
 gridContainer.addEventListener('click', (e) => {
 	if (e.target !== gridContainer) {
 		const card = e.target.closest('.card');
-		const index = card.getAttribute('data-index');
+		let index = card.getAttribute('data-index');
 
 		displayModal(index);
+
+		rightArrow.addEventListener('click', () => {
+			if (index < employees.length - 1) {
+				index++;
+				displayModal(index);
+			}
+		});
+
+		leftArrow.addEventListener('click', () => {
+			if (index > 0) {
+				index--;
+				displayModal(index);
+			}
+		});
 	}
 });
 
-modalClose.addEventListener('click', () => {
-	overlay.classList.add('hidden');
+// Search Filter for Employees
+
+searchBar.addEventListener('keyup', (e) => {
+	const searchString = e.target.value.toLowerCase();
+
+	const empNames = document.querySelectorAll('.card h2');
+
+	const filteredResults = empNames.forEach((name) => {
+		if (!name.textContent.toLowerCase().includes(searchString)) {
+			name.closest('.card').classList.add('hidden');
+		} else if (name.textContent.toLowerCase().includes(searchString)) {
+			name.closest('.card').classList.remove('hidden');
+		}
+	});
+
+	return filteredResults;
 });
