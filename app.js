@@ -66,12 +66,12 @@ function displayModal(index) {
       <h2 class="name">${name.first} ${name.last}</h2>
       <p class="email">${email}</p>
 			<p class="address">${city}</p>
-      <hr />
-      <p>${phone}</p>
+      <hr class="line-break" />
+      <p class="phone">${phone}</p>
       <p class="address">${street.number} ${
 		street.name
 	}, ${state} ${postcode}</p>
-      <p>Birthday: ${date.getMonth()}/${date.getDate()}/${date.getFullYear()}</p>
+      <p class="birthday">Birthday: ${date.getMonth()}/${date.getDate()}/${date.getFullYear()}</p>
     </div>
 	`;
 
@@ -118,14 +118,14 @@ gridContainer.addEventListener('click', (e) => {
 // Search Filter for Employees
 
 searchBar.addEventListener('keyup', (e) => {
-	const searchString = e.target.value.toLowerCase();
+	const searchString = e.target.value.toUpperCase();
 
 	const empNames = document.querySelectorAll('.card h2');
 
 	const filteredResults = empNames.forEach((name) => {
-		if (!name.textContent.toLowerCase().includes(searchString)) {
+		if (!name.textContent.toUpperCase().includes(searchString)) {
 			name.closest('.card').classList.add('hidden');
-		} else if (name.textContent.toLowerCase().includes(searchString)) {
+		} else if (name.textContent.toUpperCase().includes(searchString)) {
 			name.closest('.card').classList.remove('hidden');
 		}
 	});
